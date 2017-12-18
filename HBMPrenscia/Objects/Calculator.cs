@@ -17,7 +17,7 @@ namespace HBMPrenscia.Objects
         public Calculator(string _left, string _right, string _operator)
         {
             if (!ParseInt(_left) || !ParseInt(_right) || !ParseOperator(_operator))
-                throw new InvalidParameterException();
+                throw new InvalidParameterException(); // <- symbolic declaration
 
             LeftArg = _left;
             RightArg = _right;
@@ -50,25 +50,29 @@ namespace HBMPrenscia.Objects
                 switch (OperatorArg)
                 {
                     case "+":
-                        result = (left + right).ToString();
+                        result = checked(left + right).ToString();
                         break;
                     case "-":
-                        result = (left - right).ToString();
+                        result = checked(left - right).ToString();
                         break;
                     case "*":
-                        result = (left * right).ToString();
+                        result = checked(left * right).ToString();
                         break;
                     case "/":
-                        result = (left / right).ToString();
+                        result = checked(left / right).ToString();
                         break;
                     default: break;
                 }
 
                 ResultIndex.Push(result);
             }
-            catch (Exception ex)
+            catch (OverflowException)
             {
-                Console.WriteLine(ex.Message);
+                throw new ResultOverflowException();
+            }
+            catch (Exception)
+            {
+                throw new InvalidOperationException();
             }
         }
 
@@ -77,7 +81,7 @@ namespace HBMPrenscia.Objects
             return ResultIndex.Peek();
         }
 
-        public string getResult(int index)
+        public string getPreviousResult(int index)
         {
             try
             {
@@ -93,10 +97,24 @@ namespace HBMPrenscia.Objects
 
         private bool ParseInt(string input)
         {
-            int _parse = 0;
-            Int32.TryParse(input, out _parse);
+            try
+            {
+                int.Parse(input);
 
-            return _parse != 0;
+                return true;
+            }
+            catch (OverflowException)
+            {
+                throw new ResultOverflowException();
+            }
+            catch (ArgumentNullException)
+            {
+                throw new InvalidParameterException();
+            }
+            catch (FormatException)
+            {
+                throw new InvalidParameterException();
+            }
         }
 
         private bool ParseOperator(string input)
@@ -109,7 +127,7 @@ namespace HBMPrenscia.Objects
                 case "/":
                     return true;
                 default:
-                    return false;
+                    throw new InvalidOperatorException();
             }
         }
     }
