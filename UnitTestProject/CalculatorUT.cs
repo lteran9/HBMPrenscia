@@ -107,12 +107,12 @@ namespace UnitTestProject
         [TestCategory("Calculator")]
         public void TestMethod2()
         {
-
+            
         }
 
         #region Overflow
         [TestMethod]
-        [TestCategory("Advanced - Overflow")]
+        [TestCategory("Calculator - Overflow")]
         [ExpectedException(typeof(ResultOverflowException))]
         public void TestMethod3()
         {
@@ -121,7 +121,7 @@ namespace UnitTestProject
         }
 
         [TestMethod]
-        [TestCategory("Advanced - Overflow")]
+        [TestCategory("Calculator - Overflow")]
         [ExpectedException(typeof(ResultOverflowException))]
         public void TestMethod3A()
         {
@@ -132,7 +132,7 @@ namespace UnitTestProject
         }
 
         [TestMethod]
-        [TestCategory("Advanced - Overflow")]
+        [TestCategory("Calculator - Overflow")]
         [ExpectedException(typeof(ResultOverflowException))]
         public void TestMethod3B()
         {
@@ -143,7 +143,7 @@ namespace UnitTestProject
         }
 
         [TestMethod]
-        [TestCategory("Advanced - Overflow")]
+        [TestCategory("Calculator - Overflow")]
         [ExpectedException(typeof(ResultOverflowException))]
         public void TestMethod3C()
         {
@@ -156,7 +156,7 @@ namespace UnitTestProject
 
         #region Input
         [TestMethod]
-        [TestCategory("Advanced - Input")]
+        [TestCategory("Calculator - Input")]
         public void TestMethod4()
         {
             var calc = new Calculator("191", "9", "+");
@@ -166,10 +166,12 @@ namespace UnitTestProject
 
             calc.SetLeft("2");
             calc.SetRight("5");
+
+            /// No exception expected
         }
 
         [TestMethod]
-        [TestCategory("Advanced - Input")]
+        [TestCategory("Calculator - Input")]
         [ExpectedException(typeof(InvalidParameterException))]
         public void TestMethod4A()
         {
@@ -177,15 +179,15 @@ namespace UnitTestProject
         }
 
         [TestMethod]
-        [TestCategory("Advanced - Input")]
+        [TestCategory("Calculator - Input")]
         [ExpectedException(typeof(InvalidParameterException))]
         public void TestMethod4B()
         {
-            var calc = new Calculator(null, null, null);
+            var calc = new Calculator(null, null, "+");
         }
 
         [TestMethod]
-        [TestCategory("Advanced - Input")]
+        [TestCategory("Calculator - Input")]
         [ExpectedException(typeof(InvalidParameterException))]
         public void TestMethod4C()
         {
@@ -196,7 +198,7 @@ namespace UnitTestProject
         }
 
         [TestMethod]
-        [TestCategory("Advanced - Input")]
+        [TestCategory("Calculator - Input")]
         [ExpectedException(typeof(InvalidParameterException))]
         public void TestMethod4D()
         {
@@ -205,14 +207,21 @@ namespace UnitTestProject
 
             calc.SetRight(null);
         }
-        #endregion
 
-        #region Operator
         [TestMethod]
-        [TestCategory("Advanced - Operator")]
-        public void TestMethod5()
+        [TestCategory("Calculator - Input")]
+        [ExpectedException(typeof(InvalidOperatorException))]
+        public void TestMethod4E()
         {
+            var calc = new Calculator("50", "50", null);
+        }
 
+        [TestMethod]
+        [TestCategory("Calculator - Input")]
+        [ExpectedException(typeof(InvalidOperatorException))]
+        public void TestMethod4F()
+        {
+            var calc = new Calculator("50", "50", "add");
         }
         #endregion
 

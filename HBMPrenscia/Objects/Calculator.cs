@@ -5,18 +5,19 @@ namespace HBMPrenscia.Objects
 {
     /// <summary>
     /// @author TeranL
-    /// @date 12/19/2017
+    /// @date 12/18/2017
     /// 
     /// Calculator class exemplifying Object Oriented Principles (OOP)
     /// for HBM Prenscia. Concepts covered in this project:
     ///     (1) Encapsulation
     ///         - Class variables are not accessible from outside class definition.
+    ///         - Delegation of responsibilities between methods.
     ///          
     ///     (2) Inheritance
     ///         - Custom exception class declarations inherit from base Exception class.
     ///                 
     ///     (3) Polymorphism
-    ///         - 
+    ///         - Overloading methods to highlight reusability.
     ///         
     /// PART 1
     /// </summary>
@@ -50,6 +51,12 @@ namespace HBMPrenscia.Objects
         {
             if (value.ParseInt())
                 LeftOperand = value;
+        }
+
+        public void SetOperator(string value)
+        {
+            if (value.ParseOperator())
+                Operator = value;
         }
 
         public void Calculate()
