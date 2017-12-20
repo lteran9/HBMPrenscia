@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HBMPrenscia.Objects
 {
@@ -13,16 +9,16 @@ namespace HBMPrenscia.Objects
 
     public class ResultOverflowException : Exception
     {
-        public ResultOverflowException() : base("Result Overflow") { }
+        public ResultOverflowException() : base("The number is too big to be represented by a 32-bit declaration.") { }
     }
 
     public class InvalidOperatorException : Exception
     {
-        public InvalidOperatorException() : base("Invalid Operator") { }
+        public InvalidOperatorException() : base("Operator not recognized.") { }
     }
 
     public class InvalidOperationException : Exception
     {
-        public InvalidOperationException() : base("Invalid Operation") { }
+        public InvalidOperationException() : base("Operation results in an imaginary number.") { }
     }
 }

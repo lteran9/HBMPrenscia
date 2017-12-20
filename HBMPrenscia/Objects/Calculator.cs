@@ -1,53 +1,72 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HBMPrenscia.Objects
 {
+    /// <summary>
+    /// @author TeranL
+    /// @date 12/19/2017
+    /// 
+    /// Calculator class exemplifying Object Oriented Principles (OOP)
+    /// for HBM Prenscia. Concepts covered in this project:
+    ///     (1) Encapsulation
+    ///         - Class variables are not accessible from outside class definition.
+    ///          
+    ///     (2) Inheritance
+    ///         - Custom exception class declarations inherit from base Exception class.
+    ///                 
+    ///     (3) Polymorphism
+    ///         - 
+    ///         
+    /// PART 1
+    /// </summary>
     public class Calculator
     {
-        private string LeftArg { get; set; }
-        private string RightArg { get; set; }
-        private string OperatorArg { get; set; }
+        private string LeftOperand { get; set; }
+        private string RightOperand { get; set; }
+        private string Operator { get; set; }
 
         private Stack<string> ResultIndex { get; set; }
 
         public Calculator(string _left, string _right, string _operator)
         {
-            if (!ParseInt(_left) || !ParseInt(_right) || !ParseOperator(_operator))
-                throw new InvalidParameterException(); // <- symbolic declaration
+            if (!_left.ParseInt() || !_right.ParseInt() || !_operator.ParseOperator())
+                throw new InvalidParameterException(); /// ~ symbolic declaration
 
-            LeftArg = _left;
-            RightArg = _right;
-            OperatorArg = _operator;
+            LeftOperand = _left;
+            RightOperand = _right;
+            Operator = _operator;
 
             ResultIndex = new Stack<string>();
         }
 
-        public void setRight(string value)
+        public void SetRight(string value)
         {
-            if (ParseInt(value))
-                RightArg = value;
+            if (value.ParseInt())
+                RightOperand = value;
         }
 
-        public void setLeft(string value)
+        public void SetLeft(string value)
         {
-            if (ParseInt(value))
-                LeftArg = value;
+            if (value.ParseInt())
+                LeftOperand = value;
         }
 
-        public void calculate()
+        public void Calculate()
+        {
+            Calculate(LeftOperand, RightOperand, Operator);
+        }
+
+        private void Calculate(string leftOp, string rightOp, string op)
         {
             string result = string.Empty;
 
             try
             {
-                int left = Int32.Parse(LeftArg);
-                int right = Int32.Parse(RightArg);
+                int left = Int32.Parse(leftOp);
+                int right = Int32.Parse(rightOp);
 
-                switch (OperatorArg)
+                switch (Operator)
                 {
                     case "+":
                         result = checked(left + right).ToString();
@@ -76,59 +95,17 @@ namespace HBMPrenscia.Objects
             }
         }
 
-        public string getResult()
+        public string GetResult()
         {
             return ResultIndex.Peek();
         }
 
-        public string getPreviousResult(int index)
+        public string GetPreviousResult(int index)
         {
-            try
-            {
+            if (index > 0 && index <= 10)
                 return ResultIndex.ToArray()[index];
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
 
-            return string.Empty;
-        }
-
-        private bool ParseInt(string input)
-        {
-            try
-            {
-                int.Parse(input);
-
-                return true;
-            }
-            catch (OverflowException)
-            {
-                throw new ResultOverflowException();
-            }
-            catch (ArgumentNullException)
-            {
-                throw new InvalidParameterException();
-            }
-            catch (FormatException)
-            {
-                throw new InvalidParameterException();
-            }
-        }
-
-        private bool ParseOperator(string input)
-        {
-            switch (input)
-            {
-                case "+":
-                case "-":
-                case "*":
-                case "/":
-                    return true;
-                default:
-                    throw new InvalidOperatorException();
-            }
+            throw new InvalidParameterException();
         }
     }
 }

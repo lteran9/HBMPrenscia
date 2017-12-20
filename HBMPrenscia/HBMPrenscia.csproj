@@ -42,13 +42,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Objects\AltCalculator.cs" />
     <Compile Include="Objects\Calculator.cs" />
+    <Compile Include="Objects\CalculatorInput.cs" />
     <Compile Include="Objects\Exceptions.cs" />
+    <Compile Include="Objects\Extensions.cs" />
+    <Compile Include="Objects\Operand.cs" />
+    <Compile Include="Objects\Operator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Objects\Part 2\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

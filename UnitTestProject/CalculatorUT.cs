@@ -8,51 +8,106 @@ namespace UnitTestProject
     public class CalculatorUT
     {
         [TestMethod]
-        [TestCategory("Basic")]
+        [TestCategory("Calculator")]
         public void TestMethod1()
         {
+            /// Basic
             var calc = new Calculator("1", "1", "+");
-            calc.calculate();
+            calc.Calculate();
 
-            Assert.AreEqual("2", calc.getResult());
+            Assert.AreEqual("2", calc.GetResult());
 
-            calc.setLeft("2");
-            calc.setRight("2");
+            calc.SetLeft("2");
+            calc.SetRight("2");
 
-            Assert.AreEqual("2", calc.getResult());
+            Assert.AreEqual("2", calc.GetResult());
 
-            calc.calculate();
+            calc.Calculate();
 
-            Assert.AreEqual("4", calc.getResult());
+            Assert.AreEqual("4", calc.GetResult());
+
+            /// Intermediate
+            var results = new string[3];
+
+            calc = new Calculator("8", "2", "*");
+            calc.Calculate();
+
+            results[0] = calc.GetResult();
+            Assert.AreEqual("16", results[0]);
+
+            calc.SetLeft("16");
+            calc.Calculate();
+
+            results[1] = calc.GetResult();
+            Assert.AreEqual("32", results[1]);
+
+            calc.SetLeft("32");
+            calc.Calculate();
+
+            results[2] = calc.GetResult();
+            Assert.AreEqual("64", results[2]);
+
+            Assert.AreEqual(results[0], calc.GetPreviousResult(2));
+            Assert.AreEqual(results[1], calc.GetPreviousResult(1));
+            Assert.AreEqual(results[2], calc.GetResult());
+
+            /// Advanced
+            calc = new Calculator("56", "24", "+");
+            calc.Calculate();
+
+            calc.SetLeft("4");
+            calc.SetRight("9");
+            calc.Calculate();
+
+            calc.SetLeft("13");
+            calc.SetRight("2");
+            calc.Calculate();
+
+            calc.SetLeft("43");
+            calc.SetRight("5");
+            calc.Calculate();
+
+            calc.SetLeft("1");
+            calc.SetRight("1");
+            calc.Calculate();
+
+            calc.SetLeft("29");
+            calc.SetRight("78");
+            calc.Calculate();
+
+            calc.SetLeft("34");
+            calc.SetRight("63");
+            calc.Calculate();
+
+            calc.SetLeft("75");
+            calc.SetRight("12");
+            calc.Calculate();
+
+            calc.SetLeft("93");
+            calc.SetRight("56");
+            calc.Calculate();
+
+            calc.SetLeft("54");
+            calc.SetRight("4");
+            calc.Calculate();
+
+            Assert.AreEqual("58", calc.GetResult());
+            Assert.AreEqual("149", calc.GetPreviousResult(1));
+            Assert.AreEqual("87", calc.GetPreviousResult(2));
+            Assert.AreEqual("97", calc.GetPreviousResult(3));
+            Assert.AreEqual("107", calc.GetPreviousResult(4));
+            Assert.AreEqual("2", calc.GetPreviousResult(5));
+            Assert.AreEqual("48", calc.GetPreviousResult(6));
+            Assert.AreEqual("15", calc.GetPreviousResult(7));
+            Assert.AreEqual("13", calc.GetPreviousResult(8));
+            Assert.AreEqual("80", calc.GetPreviousResult(9));
         }
 
         [TestMethod]
-        [TestCategory("Intermediate")]
+        [TestCategory("Calculator")]
         public void TestMethod2()
         {
-            var results = new string[3];
 
-            var calc = new Calculator("8", "2", "*");
-            calc.calculate();
-
-            results[0] = calc.getResult();
-            Assert.AreEqual("16", results[0]);
-
-            calc.setLeft("16");
-            calc.calculate();
-
-            results[1] = calc.getResult();
-            Assert.AreEqual("32", results[1]);
-
-            calc.setLeft("32");
-            calc.calculate();
-
-            results[2] = calc.getResult();
-            Assert.AreEqual("64", results[2]);
-
-            Assert.AreEqual(results[0], calc.getPreviousResult(2));
-            Assert.AreEqual(results[1], calc.getPreviousResult(1));
-            Assert.AreEqual(results[2], calc.getPreviousResult(0));
         }
 
         #region Overflow
@@ -62,7 +117,7 @@ namespace UnitTestProject
         public void TestMethod3()
         {
             var calc = new Calculator("1298237837483742", "2", "*");
-            calc.calculate();
+            calc.Calculate();
         }
 
         [TestMethod]
@@ -71,9 +126,9 @@ namespace UnitTestProject
         public void TestMethod3A()
         {
             var calc = new Calculator("1", "2", "/");
-            calc.calculate();
+            calc.Calculate();
 
-            calc.setLeft("7070987897987");
+            calc.SetLeft("7070987897987");
         }
 
         [TestMethod]
@@ -82,9 +137,9 @@ namespace UnitTestProject
         public void TestMethod3B()
         {
             var calc = new Calculator("231", "345", "*");
-            calc.calculate();
+            calc.Calculate();
 
-            calc.setRight("12889892309");
+            calc.SetRight("12889892309");
         }
 
         [TestMethod]
@@ -93,9 +148,9 @@ namespace UnitTestProject
         public void TestMethod3C()
         {
             var calc = new Calculator("238727", "2387123", "*");
-            calc.calculate();
+            calc.Calculate();
 
-            var result = calc.getResult();
+            var result = calc.GetResult();
         }
         #endregion
 
@@ -105,12 +160,12 @@ namespace UnitTestProject
         public void TestMethod4()
         {
             var calc = new Calculator("191", "9", "+");
-            calc.calculate();
+            calc.Calculate();
 
-            Assert.AreEqual("200", calc.getResult());
+            Assert.AreEqual("200", calc.GetResult());
 
-            calc.setLeft("2");
-            calc.setRight("5");
+            calc.SetLeft("2");
+            calc.SetRight("5");
         }
 
         [TestMethod]
@@ -135,9 +190,9 @@ namespace UnitTestProject
         public void TestMethod4C()
         {
             var calc = new Calculator("23", "11", "-");
-            calc.calculate();
+            calc.Calculate();
 
-            calc.setLeft(null);
+            calc.SetLeft(null);
         }
 
         [TestMethod]
@@ -146,9 +201,9 @@ namespace UnitTestProject
         public void TestMethod4D()
         {
             var calc = new Calculator("23", "11", "-");
-            calc.calculate();
+            calc.Calculate();
 
-            calc.setRight(null);
+            calc.SetRight(null);
         }
         #endregion
 
@@ -167,24 +222,24 @@ namespace UnitTestProject
         public void ProvidedTests()
         {
             var calc = new Calculator("9", "1", "+");
-            calc.calculate();
+            calc.Calculate();
 
-            Assert.AreEqual("10", calc.getResult());
+            Assert.AreEqual("10", calc.GetResult());
 
             calc = new Calculator("1", "7", "-");
-            calc.calculate();
+            calc.Calculate();
 
-            Assert.AreEqual("-6", calc.getResult());
+            Assert.AreEqual("-6", calc.GetResult());
 
             calc = new Calculator("8", "8", "*");
-            calc.calculate();
+            calc.Calculate();
 
-            Assert.AreEqual("64", calc.getResult());
+            Assert.AreEqual("64", calc.GetResult());
 
             calc = new Calculator("12", "3", "/");
-            calc.calculate();
+            calc.Calculate();
 
-            Assert.AreEqual("4", calc.getResult());
+            Assert.AreEqual("4", calc.GetResult());
         }
 
         [TestMethod]
@@ -212,6 +267,7 @@ namespace UnitTestProject
         }
         #endregion
 
+        #region Concept
         [TestMethod]
         [TestCategory("Raise Exception")]
         [ExpectedException(typeof(InvalidOperatorException))]
@@ -219,5 +275,6 @@ namespace UnitTestProject
         {
             var calc = new Calculator("1", "1", "add");
         }
+        #endregion
     }
 }
